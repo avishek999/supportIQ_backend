@@ -8,6 +8,8 @@ import { notFoundHandler, globalErrorHandler } from "./app/middlewares/error.mid
 
 const app = express();
 
+app.set("trust proxy", 1);
+
 // Core Middleware (Built-in & Third-party)
 const allowedOrigins = [CLIENT_URL, "http://localhost:3000", "http://localhost:3001"];
 

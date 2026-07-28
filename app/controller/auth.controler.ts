@@ -29,10 +29,11 @@ export const registerUser = async(req:Request, res:Response)=>{
             {id:user._id,email: user.email}, JWT_SECRET || "default_secret", {expiresIn: "1d"}
         )
 
+        const isProduction = NODE_ENV === "production" || process.env.RENDER === "true";
         const cookieOptions = {
             httpOnly: true,
-            secure: NODE_ENV === "production",
-            sameSite: (NODE_ENV === "production" ? "strict" : "lax") as "strict" | "lax",
+            secure: isProduction,
+            sameSite: (isProduction ? "none" : "lax") as "none" | "lax",
             maxAge: 1000 * 60 * 60 * 24 * 7
         };
         return res.status(201).cookie("token", token, cookieOptions).json({message:"User registered successfully",user})
@@ -70,10 +71,11 @@ export const loginUser = async(req:Request, res:Response)=>{
             JWT_SECRET || "default_secret",
             { expiresIn: "1d" } // Token expires in 1 day
         );
+        const isProduction = NODE_ENV === "production" || process.env.RENDER === "true";
         const cookieOptions = {
             httpOnly: true,
-            secure: NODE_ENV === "production",
-            sameSite: (NODE_ENV === "production" ? "strict" : "lax") as "strict" | "lax",
+            secure: isProduction,
+            sameSite: (isProduction ? "none" : "lax") as "none" | "lax",
             maxAge: 1000 * 60 * 60 * 24 * 7
         };
         return res.status(200).cookie("token", token, cookieOptions).json({message:"User logged in successfully",user :{
@@ -91,10 +93,11 @@ export const loginUser = async(req:Request, res:Response)=>{
 
 export const logoutUser = async (_req: Request, res: Response) => {
     try {
+        const isProduction = NODE_ENV === "production" || process.env.RENDER === "true";
         const cookieOptions = {
             httpOnly: true,
-            secure: NODE_ENV === "production",
-            sameSite: (NODE_ENV === "production" ? "strict" : "lax") as "strict" | "lax",
+            secure: isProduction,
+            sameSite: (isProduction ? "none" : "lax") as "none" | "lax",
             expires: new Date(0)
         };
         return res
