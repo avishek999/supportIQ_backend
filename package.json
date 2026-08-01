@@ -4,9 +4,9 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node dist/index.js",
-    "dev": "tsx watch index.ts",
-    "build": "tsc"
+    "start": "node api.js && node dist/index.js",
+    "dev": "node api.js && tsx watch index.ts",
+    "build": "node api.js && tsc"
   },
   "keywords": [],
   "author": "",
